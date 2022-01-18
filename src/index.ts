@@ -1,1 +1,1 @@
-export {PurpleBerry} from './purpleberry';
+export default 'as';
