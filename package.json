@@ -1,0 +1,56 @@
+{
+  "name": "purpleberry",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "release:run": "semantic-release",
+    "release:dry": "semantic-release --dry-run",
+    "lint": "eslint . --ext .ts",
+    "test": "jest",
+    "build": "npm run build:types && npm run build:js",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:js": "babel src --out-dir dist --extensions \".ts,.tsx\" --source-maps"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fliege01/PurpleBerry.git"
+  },
+  "keywords": [
+    "permission"
+  ],
+  "contributors": [
+    {
+      "name": "Nihad Amin",
+      "url": "https://github.com/Neihed"
+    },
+    {
+      "name": "Nico Bischof",
+      "url": "https://github.com/fliege01"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fliege01/PurpleBerry/issues"
+  },
+  "homepage": "https://github.com/fliege01/PurpleBerry#readme",
+  "files": [
+    "/dist"
+  ],
+  "devDependencies": {
+    "@babel/cli": "^7.16.8",
+    "@babel/core": "^7.16.7",
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/preset-env": "^7.16.8",
+    "@babel/preset-typescript": "^7.16.7",
+    "@types/jest": "^27.4.0",
+    "@types/node": "^17.0.9",
+    "@typescript-eslint/eslint-plugin": "^5.10.0",
+    "@typescript-eslint/parser": "^5.10.0",
+    "eslint": "^8.7.0",
+    "jest": "^27.4.7",
+    "semantic-release": "^19.0.2",
+    "typescript": "^4.5.4"
+  }
+}
