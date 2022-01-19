@@ -116,12 +116,6 @@ describe('Storage Adapter Testing', () => {
 		});
 	});
 
-
-
-	//////////////////////
-
-
-
 	describe('Testing role schema storage', () => {
 		test('Check if role schema does not exists', () => {
 			expect(adapter.doesRoleSchemaExist('unknownRoleSchema')).toBe(false);
