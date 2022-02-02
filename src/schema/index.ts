@@ -13,11 +13,11 @@ export interface PermissionStatement {
 
 export interface PermissionSchema extends BaseSchema {
 	$extend?: Array<string>,
-	statements?: Array<PermissionStatement>
+	statements?: PermissionStatement[] | PermissionStatement
 }
 
 export interface RoleSchema extends BaseSchema {
-	$extend?: Array<string>,
-	permission?: Array<string>
+	$extend?: Array<string> | string,
+	permission?: Array<string> | string
 	statements?: Array<PermissionStatement>
 }
