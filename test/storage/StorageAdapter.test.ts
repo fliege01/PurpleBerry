@@ -88,7 +88,7 @@ describe('Storage Adapter Testing', () => {
 				expect(() => adapter.updatePermissionSchema('knownSchema', updatedPermissionSchema)).not.toThrow();
 			});
 
-			test('Check if permission schema is uptaded', () => {
+			test('Check if permission schema is updated', () => {
 				expect(adapter.getPermissionSchema('knownSchema')).toEqual(updatedPermissionSchema);
 			});
 
