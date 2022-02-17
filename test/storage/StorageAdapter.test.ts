@@ -150,7 +150,7 @@ describe('Storage Adapter Testing', () => {
 				expect(() => adapter.updateRoleSchema('knownRoleSchema', updatedRoleSchema)).not.toThrow();
 			});
 
-			test('Check if role schema is uptaded', () => {
+			test('Check if role schema is updated', () => {
 				expect(adapter.getRoleSchema('knownRoleSchema')).toEqual(updatedRoleSchema);
 			});
 
