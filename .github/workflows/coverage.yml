@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: '14'
           cache: 'npm'
-      - uses: ArtiomTr/jest-coverage-report-action@v2.0-rc.6
+      - uses: ArtiomTr/jest-coverage-report-action@v2(
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           #   threshold: 80 # optional parameter
