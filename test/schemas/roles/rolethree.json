@@ -1,0 +1,16 @@
+{
+  "$version": 1,
+  "$extend": [
+    "roletwo"
+  ],
+  "statements": [
+    {
+      "action": [
+        "actiontype.three.deleteAction"
+      ],
+      "resource": [
+        "*"
+      ]
+    }
+  ]
+}

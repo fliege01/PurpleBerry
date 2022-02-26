@@ -1,0 +1,29 @@
+{
+  "$version": 1,
+  "statements": [
+    {
+      "action": [
+        "actiontype.one.getAction:any"
+      ],
+      "resource": [
+        "*"
+      ]
+    },
+    {
+      "action": [
+        "actiontype.two.writeAction:any"
+      ],
+      "resource": [
+        "some.path"
+      ]
+    },
+    {
+      "action": [
+        "actiontype.two.getAction:own"
+      ],
+      "resource": [
+        "some.path"
+      ]
+    }
+  ]
+}

@@ -9,12 +9,15 @@ export default class RoleContext {
 		this.ctx = ctx;
 	}
 
+	public getCompiledContext(): compiledRoleContext {
+		return this.ctx;
+	}
+
 	public can(action: string, resource: string, isOwner = false) {
 		let isAllowed = false;
 		for (const statement of this.ctx._statements) {
-			// Match action
+			// Check if action matches statement
 			let isAllowedByAction = false;
-
 			for (const statementAction of statement[0]) {
 				let isAllowedByActionPath = false;
 				const statementActionPath = statementAction[0];
@@ -27,16 +30,16 @@ export default class RoleContext {
 					if (action.indexOf(statementActionPath, statementActionPath.length - 1)) isAllowedByActionPath = true;
 				} else if (statementActionIsPrefix) {
 					if (action.indexOf(statementActionPath, 0)) isAllowedByActionPath = true;
-				}
+				} else if (statementActionPath === action) isAllowedByActionPath = true;
 
-				if (isAllowedByActionPath && (statementActionIgnoreOwnership && !isOwner || isOwner)) {
+				if (isAllowedByActionPath && (isOwner || isAllowedByActionPath && statementActionIsSuffix || statementActionIgnoreOwnership)) {
 					isAllowedByAction = true;
 					break;
 				}
 			}
 
+			// Check if resource matches statement
 			let isAllowedByResource = false;
-
 			for (const statementResource of statement[1]) {
 				let isAllowedByResourcePath = false;
 				const statementResourcePath = statementResource[0];
@@ -48,7 +51,7 @@ export default class RoleContext {
 					if (resource.indexOf(statementResourcePath, statementResourcePath.length - 1)) isAllowedByResourcePath = true;
 				} else if (statementResourceIsPrefix) {
 					if (resource.indexOf(statementResourcePath, 0)) isAllowedByResourcePath = true;
-				}
+				} else if (statementResourcePath === resource) isAllowedByResourcePath = true;
 
 				if (isAllowedByResourcePath) {
 					isAllowedByResource = true;

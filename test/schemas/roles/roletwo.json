@@ -1,0 +1,18 @@
+{
+  "$version": 1,
+  "$extend": "roleone",
+  "statements": [
+    {
+      "action": [
+        "actiontype.four.*"
+      ],
+      "resource": [
+        "*"
+      ]
+    },
+    {
+      "action": "*.wildcard.suffix.action",
+      "resource": "*"
+    }
+  ]
+}
