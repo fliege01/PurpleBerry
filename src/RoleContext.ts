@@ -27,9 +27,9 @@ export default class RoleContext {
 
 				if (statementActionIsSuffix && statementActionIsPrefix) isAllowedByActionPath = true;
 				else if (statementActionIsSuffix) {
-					if (action.indexOf(statementActionPath, statementActionPath.length - 1)) isAllowedByActionPath = true;
+					if (action.indexOf(statementActionPath, action.length - statementActionPath.length) >= 0) isAllowedByActionPath = true;
 				} else if (statementActionIsPrefix) {
-					if (action.indexOf(statementActionPath, 0)) isAllowedByActionPath = true;
+					if (action.indexOf(statementActionPath, 0) >= 0) isAllowedByActionPath = true;
 				} else if (statementActionPath === action) isAllowedByActionPath = true;
 
 				if (isAllowedByActionPath && (isOwner || isAllowedByActionPath && statementActionIsSuffix || statementActionIgnoreOwnership)) {
@@ -48,9 +48,9 @@ export default class RoleContext {
 
 				if (statementResourceIsSuffix && statementResourceIsPrefix) isAllowedByResourcePath = true;
 				else if (statementResourceIsSuffix) {
-					if (resource.indexOf(statementResourcePath, statementResourcePath.length - 1)) isAllowedByResourcePath = true;
+					if (resource.indexOf(statementResourcePath, resource.length - statementResourcePath.length) >= 0) isAllowedByResourcePath = true;
 				} else if (statementResourceIsPrefix) {
-					if (resource.indexOf(statementResourcePath, 0)) isAllowedByResourcePath = true;
+					if (resource.indexOf(statementResourcePath, 0) >= 0) isAllowedByResourcePath = true;
 				} else if (statementResourcePath === resource) isAllowedByResourcePath = true;
 
 				if (isAllowedByResourcePath) {
