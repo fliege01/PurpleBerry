@@ -35,6 +35,9 @@
     "url": "https://github.com/fliege01/PurpleBerry/issues"
   },
   "homepage": "https://github.com/fliege01/PurpleBerry#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "/dist"
   ],
