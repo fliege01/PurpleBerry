@@ -1,7 +1,7 @@
 import {compiledRoleContext} from '~/schema/compiledRoleContext';
 import {CriticalPermissionManagerError} from '~/error/CriticalPermissionManagerError';
 
-export default class RoleContext {
+export class RoleContext {
 	private readonly ctx: compiledRoleContext;
 
 	constructor(ctx: compiledRoleContext) {

@@ -8,7 +8,7 @@ import {
 } from '~/schema/compiledRoleContext';
 import {resolveStatementWildcardPath} from '~/utils';
 import {GenericPermissionManagerError} from '~/error/GenericPermissionManagerError';
-import RoleContext from '~/RoleContext';
+import {RoleContext} from '~/RoleContext';
 
 export interface PermissionManagerOptions {
 	storageAdapter?: StorageAdapter;

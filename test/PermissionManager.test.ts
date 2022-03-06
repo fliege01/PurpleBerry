@@ -2,7 +2,7 @@ import {PermissionManager} from '~/PermissionManager';
 import {PermissionSchema, RoleSchema} from '../src/schema';
 import {StorageAdapter} from '~/storage/StorageAdapter';
 import {importAllSchemesToPermissionManager} from './utils';
-import RoleContext from '~/RoleContext';
+import {RoleContext} from '~/RoleContext';
 
 let permissionManager: PermissionManager;
 
