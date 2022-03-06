@@ -208,7 +208,7 @@ describe('PermissionManager logic test', () => {
 
 	});
 
-	describe('logic stuff', () => {
+	describe('Test logic stuff', () => {
 		let ctx: RoleContext;
 		beforeAll(() => {
 			ctx = permissionManager.createRoleContext('rolefour');
@@ -240,6 +240,14 @@ describe('PermissionManager logic test', () => {
 
 		test('Should deny known action on unknown resource', () => {
 			expect(ctx.can('actiontype.two.writeAction', 'unknown.path')).toBe(false);
+		});
+
+		test('Should allow prefixed resource wildcard', () => {
+			expect(ctx.can('some.action', 'resourcetype.prefix.two.some.resource')).toBe(true);
+		});
+
+		test('Should allow suffixed resource wildcard', () => {
+			expect(ctx.can('some.action', 'some.resource.resourcetype.suffix.two')).toBe(true);
 		});
 	});
 });

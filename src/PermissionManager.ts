@@ -169,9 +169,14 @@ export class PermissionManager {
 			}
 
 			const resolvedStatementResources: compiledStatementResource[] = [];
-			for (const resource of statement.resource) {
-				resolvedStatementResources.push(resolveStatementWildcardPath(resource));
+			if (Array.isArray(statement.resource)) {
+				for (const resource of statement.resource) {
+					resolvedStatementResources.push(resolveStatementWildcardPath(resource));
+				}
+			} else {
+				resolvedStatementResources.push(resolveStatementWildcardPath(statement.resource));
 			}
+
 
 			resolvedStatement.push([
 				resolvedStatementActions,

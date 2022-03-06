@@ -13,6 +13,14 @@
     {
       "action": "*.wildcard.suffix.action",
       "resource": "*"
+    },
+    {
+      "action": "*",
+      "resource": "resourcetype.prefix.two.*"
+    },
+    {
+      "action": "*",
+      "resource": "*.resourcetype.suffix.two"
     }
   ]
 }
