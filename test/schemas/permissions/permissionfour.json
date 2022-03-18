@@ -1,0 +1,7 @@
+{
+  "$version": 1,
+  "statements": {
+    "action": "deep.resolved.action",
+    "resource": "*"
+  }
+}

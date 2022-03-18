@@ -208,7 +208,7 @@ describe('PermissionManager logic test', () => {
 
 	});
 
-	describe('Test logic stuff', () => {
+	describe('Testing role schema', () => {
 		let ctx: RoleContext;
 		beforeAll(() => {
 			ctx = permissionManager.createRoleContext('rolefour');
@@ -217,11 +217,11 @@ describe('PermissionManager logic test', () => {
 			expect(permissionManager.doesRoleSchemaExist('rolefour')).toBe(true);
 		});
 
-		test('Create RoleContext by role with string ref', () => {
+		test('Create RoleContext by role with string reference', () => {
 			expect(permissionManager.createRoleContext('rolefour')).toBeInstanceOf(RoleContext);
 		});
 
-		test('Create RoleContext by role with array ref', () => {
+		test('Create RoleContext by role with array reference', () => {
 			expect(permissionManager.createRoleContext('rolethree')).toBeInstanceOf(RoleContext);
 		});
 
@@ -250,4 +250,49 @@ describe('PermissionManager logic test', () => {
 			expect(ctx.can('some.action', 'some.resource.resourcetype.suffix.two')).toBe(true);
 		});
 	});
+
+	describe('Testing permission schema', () => {
+		let ctx: RoleContext;
+		beforeAll(() => {
+			ctx = permissionManager.createRoleContext('rolewithpermissions');
+		});
+
+		test('Check if Permission schemas are imported', () => {
+			expect(permissionManager.doesPermissionSchemaExist('permissionone')).toBe(true);
+		});
+
+		test('Should allow wildcard action for wildcard ressource on any', () => {
+			const wildcardCtx = permissionManager.createRoleContext('rolewithwildcardpermissions');
+			expect(wildcardCtx.can('some.action', 'some.ressource', false)).toBe(true);
+		});
+
+		test('Should allow specific action on all ressources on any',() => {
+			expect(ctx.can('permissiontest.action.two.allresources', 'some.ressource', false)).toBe(true);
+		});
+
+		test('Should reject specific action on all ressources on not owned', () => {
+			expect(ctx.can('permissiontest.action.two.someresource', 'some.ressource', false)).toBe(false);
+		});
+
+		test('Should allow specific action on all ressources on owned', () => {
+			expect(ctx.can('permissiontest.action.two.someresource', 'some.ressource', true)).toBe(true);
+		});
+
+		test('Should deny unknown action on unknown resource', () => {
+			expect(ctx.can('unknown.action', 'unknown.resource', false)).toBe(false);
+		});
+
+		test('Should allow prefixed resource wildcard', () => {
+			expect(ctx.can('some.action', 'resourcetype.permission.prefix.two.some.resource')).toBe(true);
+		});
+
+		test('Should allow suffixed resource wildcard', () => {
+			expect(ctx.can('some.action', 'some.resource.resourcetype.permission.suffix.two')).toBe(true);
+		});
+
+		test('Deep resolving statements should be allowed', () => {
+			expect(ctx.can('deep.resolved.action', 'some.ressource', true)).toBe(true);
+		});
+	});
+
 });

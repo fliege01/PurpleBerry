@@ -1,0 +1,22 @@
+{
+  "$version": 1,
+  "$extend": ["emptypermissionone"],
+  "statements": [
+    {
+      "action": "permissiontest.action.two.allresources:any",
+      "resource": "*"
+    },
+    {
+      "action": "permissiontest.action.two.someresource",
+      "resource": "*"
+    },
+    {
+      "action": "*",
+      "resource": "resourcetype.permission.prefix.two.*"
+    },
+    {
+      "action": "*",
+      "resource": "*.resourcetype.permission.suffix.two"
+    }
+  ]
+}
