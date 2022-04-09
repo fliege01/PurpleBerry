@@ -1,8 +1,9 @@
 import {PermissionManager} from '~/PermissionManager';
-import {PermissionSchema, RoleSchema} from '../src/schema';
+import {PermissionSchema, RoleSchema} from '~/schema';
 import {StorageAdapter} from '~/storage/StorageAdapter';
 import {importAllSchemesToPermissionManager} from './utils';
 import {RoleContext} from '~/RoleContext';
+import {CriticalPermissionManagerError} from '~/error/CriticalPermissionManagerError';
 
 let permissionManager: PermissionManager;
 
@@ -23,6 +24,14 @@ describe('PermissionManager implementation', () => {
 			expect(() => new PermissionManager({
 				storageAdapter: new StorageAdapter()
 			})).not.toThrow();
+		});
+	});
+
+	describe('Error Testing ',() => {
+		test('Should throw an error if RoleContext is constructed without a context', () => {
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
+			expect(() => new RoleContext()).toThrow(CriticalPermissionManagerError);
 		});
 	});
 });
