@@ -9,24 +9,24 @@ import {
 import {resolveStatementWildcardPath} from '~/utils';
 import {GenericPermissionManagerError} from '~/error/GenericPermissionManagerError';
 import {RoleContext} from '~/RoleContext';
+import {PermissionManagerOptions} from '~/interfaces';
 
-export interface PermissionManagerOptions {
-	storageAdapter?: StorageAdapter;
-	defaultCrud?: number;
-}
-
+/**
+ * The main class of the permission manager.
+ */
 export class PermissionManager {
-	readonly __storageAdapter: StorageAdapter;
+	private readonly __storageAdapter: StorageAdapter;
 
 	constructor(options?: PermissionManagerOptions) {
 		this.__storageAdapter = (options && options.storageAdapter) ? options.storageAdapter : new StorageAdapter();
 	}
 
 	/**
-	 * Resolve all statements recursively from policies by the permissionname. Returns Array of PermissionStatement
+	 * Resolve all statements recursively from policies by the permission name. Returns Array of PermissionStatement
 	 * @param permissionName
 	 * @param cache
 	 * @private
+	 * @category Resolver
 	 */
 	private resolveStatementsByPermission(permissionName: string, cache: resolvedSchemaCache): PermissionStatement[] {
 		let statements: PermissionStatement[] = [];
@@ -66,10 +66,11 @@ export class PermissionManager {
 	}
 
 	/**
-	 * Resolve all statements recursively from policies by the rolename. All referenced permissions are also resolved. Returns Array of PermissionStatement
+	 * Resolve all statements recursively from policies by the role name. All referenced permissions are also resolved. Returns Array of PermissionStatement
 	 * @param roleName
 	 * @param cache
 	 * @private
+	 * @category Resolver
 	 */
 	private resolveStatementsByRole(roleName: string, cache: resolvedSchemaCache): PermissionStatement[] {
 		let statements: PermissionStatement[] = [];
@@ -130,9 +131,9 @@ export class PermissionManager {
 	 * compiles RoleContext payload from given role name(s) one single policy for RoleContext
 	 * @param roles
 	 * @private
+	 * @category Resolver
 	 */
-	private compileRoleContext(roles: Array<string> | string): compiledRoleContext {
-		if (!roles) roles = [];
+	private compileRoleContext(roles: Array<string> | string = []): compiledRoleContext {
 		if (typeof roles === 'string') roles = [roles];
 		let statements: PermissionStatement[] = [];
 		const resolveCache: resolvedSchemaCache = {
@@ -192,50 +193,111 @@ export class PermissionManager {
 
 	/**
 	 * Creates a new RoleContext by resolving the given roles.
-	 * @param roles
+	 * @param roles List of roles which are included in the context
+	 * @category Resolver
 	 */
 	public createRoleContext(roles: string[] | string): RoleContext {
-		const ctx = this.compileRoleContext(roles);
+		const cacheKey = StorageAdapter.createCacheKeyFromStringArray(roles);
+		// Try to get a cached version of the context
+		let ctx = this.__storageAdapter.getCompiledRoleContext(cacheKey);
+		if(!ctx){
+			ctx = this.compileRoleContext(roles);
+			this.__storageAdapter.addCompiledRoleContext(cacheKey, ctx); // Store compiled context to cache
+		}
 		return new RoleContext(ctx);
 	}
 
 	// Storage Connectors
+	/**
+	 * Check if a permission schema with the given name exists
+	 * @param {string} permissionSchemaName
+	 * @category Schema storage
+	 */
 	public doesPermissionSchemaExist(permissionSchemaName: string): boolean {
 		return this.__storageAdapter.doesPermissionSchemaExist(permissionSchemaName);
 	}
 
+	/**
+	 * Add a permission schema
+	 * @param {string} permissionSchemaName
+	 * @param {PermissionSchema} permissionSchema
+	 * @category Schema storage
+	 */
 	public addPermissionSchema(permissionSchemaName: string, permissionSchema: PermissionSchema) {
 		this.__storageAdapter.addPermissionSchema(permissionSchemaName, permissionSchema);
 	}
 
+	/**
+	 * Get a permission schema by unique name
+	 * @param {string} permissionSchemaName
+	 * @category Schema storage
+	 */
 	public getPermissionSchema(permissionSchemaName: string): PermissionSchema {
 		return this.__storageAdapter.getPermissionSchema(permissionSchemaName);
 	}
 
+	/**
+	 * Update a permission schema by name
+	 * @param {string} permissionSchemaName
+	 * @param {PermissionSchema} permissionSchema
+	 * @category Schema storage
+	 */
 	public updatePermissionSchema(permissionSchemaName: string, permissionSchema: PermissionSchema) {
 		this.__storageAdapter.updatePermissionSchema(permissionSchemaName, permissionSchema);
 	}
 
+	/**
+	 * Delete a permission schema by unique name
+	 * @param permissionSchemaName
+	 * @category Schema storage
+	 */
 	public deletePermissionSchema(permissionSchemaName: string) {
 		this.__storageAdapter.deletePermissionSchema(permissionSchemaName);
 	}
 
+	/**
+	 * Check if a role schema with the given name exists
+	 * @param {string} roleSchemaName
+	 * @category Schema storage
+	 */
 	public doesRoleSchemaExist(roleSchemaName: string): boolean {
 		return this.__storageAdapter.doesRoleSchemaExist(roleSchemaName);
 	}
 
+	/**
+	 * Add a role schema
+	 * @param {string} roleSchemaName
+	 * @param {PermissionSchema} roleSchema
+	 * @category Schema storage
+	 */
 	public addRoleSchema(roleSchemaName: string, roleSchema: RoleSchema) {
 		this.__storageAdapter.addRoleSchema(roleSchemaName, roleSchema);
 	}
 
+	/**
+	 * Get a role schema by unique name
+	 * @param {string} roleSchemaName
+	 * @category Schema storage
+	 */
 	public getRoleSchema(roleSchemaName: string): RoleSchema {
 		return this.__storageAdapter.getRoleSchema(roleSchemaName);
 	}
 
+	/**
+	 * Update a role schema by name
+	 * @param {string} roleSchemaName
+	 * @param {RoleSchema} roleSchema
+	 * @category Schema storage
+	 */
 	public updateRoleSchema(roleSchemaName: string, roleSchema: RoleSchema) {
 		this.__storageAdapter.updateRoleSchema(roleSchemaName, roleSchema);
 	}
 
+	/**
+	 * Delete a role schema by unique name
+	 * @param roleSchemaName
+	 * @category Schema storage
+	 */
 	public deleteRoleSchema(roleSchemaName: string) {
 		this.__storageAdapter.deleteRoleSchema(roleSchemaName);
 	}
