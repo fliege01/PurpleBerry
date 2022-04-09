@@ -9,9 +9,11 @@
     "release:dry": "semantic-release --dry-run",
     "lint": "eslint . --ext .ts",
     "test": "jest --coverage",
-    "build": "npm run build:types && npm run build:js",
+    "build": "npm run build:types && npm run build:js && npm run build:docs",
     "build:types": "tsc --emitDeclarationOnly",
-    "build:js": "babel src --out-dir dist --extensions \".ts,.tsx\" --source-maps"
+    "build:js": "babel src --out-dir dist --extensions \".ts,.tsx\" --source-maps",
+    "build:docs": "typedoc",
+    "build:docs-dev": "typedoc --watch"
   },
   "repository": {
     "type": "git",
@@ -52,6 +54,7 @@
     "eslint": "^8.7.0",
     "jest": "^27.4.7",
     "semantic-release": "^19.0.2",
+    "typedoc": "^0.22.14",
     "typescript": "^4.5.4"
   }
 }

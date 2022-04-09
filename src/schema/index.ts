@@ -18,8 +18,8 @@ export interface PermissionSchema extends BaseSchema {
 
 export interface RoleSchema extends BaseSchema {
 	$extend?: Array<string> | string,
+	statements?: PermissionStatement[] | PermissionStatement
 	permission?: Array<string> | string
-	statements?: Array<PermissionStatement>
 }
 
 export interface resolvedSchemaCache {
