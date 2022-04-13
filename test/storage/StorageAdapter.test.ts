@@ -4,6 +4,7 @@ import {PermissionSchema, RoleSchema} from '~/schema';
 let adapter: StorageAdapter;
 
 describe('Storage Adapter Testing', () => {
+
 	const permissionSchema: PermissionSchema = {
 		$version: 1,
 		statements: [
@@ -46,15 +47,21 @@ describe('Storage Adapter Testing', () => {
 		]
 	};
 
-	beforeAll(() => {
-		adapter = new StorageAdapter();
-	});
 
-	test('Check if StorageAdapter is available', () => {
-		expect(adapter).toBeInstanceOf(StorageAdapter);
+	describe('Constructor testing', () => {
+		test('Check if StorageAdapter is available', () => {
+			expect(new StorageAdapter()).toBeInstanceOf(StorageAdapter);
+		});
+
+		test('Check StorageAdapter constructor with options', () => {
+			expect(new StorageAdapter({cacheTTL: 1000})).toBeInstanceOf(StorageAdapter);
+		});
 	});
 
 	describe('Testing permission schema storage', () => {
+		beforeAll(() => {
+			adapter = new StorageAdapter();
+		});
 		test('Check if permission schema does not exists', () => {
 			expect(adapter.doesPermissionSchemaExist('unknownSchema')).toBe(false);
 		});

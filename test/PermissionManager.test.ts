@@ -4,6 +4,7 @@ import {StorageAdapter} from '~/storage/StorageAdapter';
 import {importAllSchemesToPermissionManager} from './utils';
 import {RoleContext} from '~/RoleContext';
 import {CriticalPermissionManagerError} from '~/error/CriticalPermissionManagerError';
+import {GenericPermissionManagerError} from '~/error/GenericPermissionManagerError';
 
 let permissionManager: PermissionManager;
 
@@ -25,6 +26,8 @@ describe('PermissionManager implementation', () => {
 				storageAdapter: new StorageAdapter()
 			})).not.toThrow();
 		});
+
+
 	});
 
 	describe('Error Testing ',() => {
@@ -234,6 +237,10 @@ describe('PermissionManager logic test', () => {
 			expect(permissionManager.createRoleContext('rolethree')).toBeInstanceOf(RoleContext);
 		});
 
+		test('Create RoleContext by multiple roles', () => {
+			expect(permissionManager.createRoleContext(['rolethree', 'rolefour'])).toBeInstanceOf(RoleContext);
+		});
+
 		test('Should allow wildcard action for wildcard ressource on any', () => {
 			const wildcardCtx = permissionManager.createRoleContext('wildcardRole');
 			expect(wildcardCtx.can('some.action', 'some.ressource', false)).toBe(true);
@@ -257,6 +264,14 @@ describe('PermissionManager logic test', () => {
 
 		test('Should allow suffixed resource wildcard', () => {
 			expect(ctx.can('some.action', 'some.resource.resourcetype.suffix.two')).toBe(true);
+		});
+
+		test('Should allow prefixed wildcard action', () => {
+			expect(ctx.can('this.is.a.wildcard.three.getAction', 'some.path', true)).toBe(true);
+		});
+
+		test('Should allow suffixed wildcard action', () => {
+			expect(ctx.can('three.getAnotherAction.this.is.a.wildcard', 'some.path', true)).toBe(true);
 		});
 	});
 
@@ -304,4 +319,18 @@ describe('PermissionManager logic test', () => {
 		});
 	});
 
+	describe('Testing invalid references', () => {
+		test('Should throw since the referenced permission in schema does not exists in recursive', () => {
+			expect(() => permissionManager.createRoleContext('invalidRole')).toThrow(GenericPermissionManagerError);
+		});
+		test('Should throw since the referenced permission in schema does not exists', () => {
+			expect(() => permissionManager.createRoleContext('invalidRole2')).toThrow(GenericPermissionManagerError);
+		});
+		test('Should throw since the referenced permission in schema does not exists in recursive', () => {
+			expect(() => permissionManager.createRoleContext('nonexistentRole')).toThrow(GenericPermissionManagerError);
+		});
+		test('Should throw since the referenced permission in schema does not exists', () => {
+			expect(() => permissionManager.createRoleContext('invalidRole3')).toThrow(GenericPermissionManagerError);
+		});
+	});
 });

@@ -24,6 +24,15 @@
       "resource": [
         "some.path"
       ]
+    },
+    {
+      "action": [
+        "*.three.getAction:own",
+        "three.getAnotherAction.*"
+      ],
+      "resource": [
+        "some.path"
+      ]
     }
   ]
 }
