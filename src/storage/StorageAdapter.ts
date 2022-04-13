@@ -59,15 +59,6 @@ export class StorageAdapter {
 	/**
 	 * Check if cache for this key exists
 	 * @param key The caching key
-	 * @category Cache
-	 */
-	public doesCompiledRoleContextExists(key: string) {
-		return (this.getCompiledRoleContext(key));
-	}
-
-	/**
-	 * Check if cache for this key exists
-	 * @param key The caching key
 	 * @param ctx The context to cache
 	 * @category Cache
 	 */

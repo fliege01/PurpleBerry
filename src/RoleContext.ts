@@ -2,16 +2,13 @@ import {compiledRoleContext} from '~/schema/compiledRoleContext';
 import {CriticalPermissionManagerError} from '~/error/CriticalPermissionManagerError';
 
 export class RoleContext {
-	private readonly ctx: compiledRoleContext;
+	readonly ctx: compiledRoleContext;
 
 	constructor(ctx: compiledRoleContext) {
 		if (!ctx) throw new CriticalPermissionManagerError('RoleContext: construction context not given');
 		this.ctx = ctx;
 	}
 
-	public getCompiledContext(): compiledRoleContext {
-		return this.ctx;
-	}
 
 	public can(action: string, resource: string, isOwner = false) {
 		let isAllowed = false;
@@ -66,9 +63,5 @@ export class RoleContext {
 		}
 
 		return isAllowed;
-	}
-
-	public exportRoleContext(): string {
-		return JSON.stringify(this.ctx);
 	}
 }
