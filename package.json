@@ -2,6 +2,7 @@
   "name": "@fliege01/purpleberry",
   "version": "0.0.0-development",
   "description": "",
+  "homepage": "https://fliege01.github.io/PurpleBerry/",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -36,7 +37,6 @@
   "bugs": {
     "url": "https://github.com/fliege01/PurpleBerry/issues"
   },
-  "homepage": "https://github.com/fliege01/PurpleBerry#readme",
   "publishConfig": {
     "access": "public"
   },
