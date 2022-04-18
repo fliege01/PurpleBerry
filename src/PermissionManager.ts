@@ -30,7 +30,7 @@ export class PermissionManager {
 	 */
 	private resolveStatementsByPermission(permissionName: string, cache: resolvedSchemaCache): PermissionStatement[] {
 		let statements: PermissionStatement[] = [];
-		// Check if permission schema exists
+		// Check if permission schema exists in storage
 		if (!this.doesPermissionSchemaExist(permissionName)) throw new GenericPermissionManagerError(`The permission schema '${permissionName}' does not exists`);
 		const permissionSchema = this.getPermissionSchema(permissionName);
 		if (permissionSchema.statements) statements = (Array.isArray(permissionSchema.statements)) ? [...statements, ...permissionSchema.statements] : [...statements, permissionSchema.statements];
