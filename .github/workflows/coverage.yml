@@ -1,0 +1,25 @@
+name: 'coverage'
+on:
+  push:
+    branches:
+      - main
+      - alpha
+      - dev
+  pull_request:
+    branches:
+      - main
+      - alpha
+      - dev
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          cache: 'npm'
+      - uses: ArtiomTr/jest-coverage-report-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          #   threshold: 80 # optional parameter

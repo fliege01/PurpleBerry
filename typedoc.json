@@ -1,0 +1,7 @@
+{
+  "name": "PurpleBerry",
+  "githubPages": true,
+  "out": "docs",
+  "entryPoints": ["./src/index.ts"],
+  "excludePrivate": true
+}
