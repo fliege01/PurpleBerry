@@ -224,6 +224,7 @@ export class PermissionManager {
 	 * @category Schema storage
 	 */
 	public addPermissionSchema(permissionSchemaName: string, permissionSchema: PermissionSchema) {
+		if(!PermissionSchema(permissionSchema)) throw new GenericPermissionManagerError('Invalid PermissionSchema on addPermissionSchema');
 		this.__storageAdapter.addPermissionSchema(permissionSchemaName, permissionSchema);
 	}
 
@@ -243,6 +244,7 @@ export class PermissionManager {
 	 * @category Schema storage
 	 */
 	public updatePermissionSchema(permissionSchemaName: string, permissionSchema: PermissionSchema) {
+		if(!PermissionSchema(permissionSchema)) throw new GenericPermissionManagerError('Invalid PermissionSchema on updatePermissionSchema');
 		this.__storageAdapter.updatePermissionSchema(permissionSchemaName, permissionSchema);
 	}
 
@@ -271,6 +273,7 @@ export class PermissionManager {
 	 * @category Schema storage
 	 */
 	public addRoleSchema(roleSchemaName: string, roleSchema: RoleSchema) {
+		if(!RoleSchema(roleSchema)) throw new GenericPermissionManagerError('Invalid RoleSchema on addRoleSchema');
 		this.__storageAdapter.addRoleSchema(roleSchemaName, roleSchema);
 	}
 
@@ -290,6 +293,7 @@ export class PermissionManager {
 	 * @category Schema storage
 	 */
 	public updateRoleSchema(roleSchemaName: string, roleSchema: RoleSchema) {
+		if(!RoleSchema(roleSchema)) throw new GenericPermissionManagerError('Invalid RoleSchema on updateRoleSchema');
 		this.__storageAdapter.updateRoleSchema(roleSchemaName, roleSchema);
 	}
 
