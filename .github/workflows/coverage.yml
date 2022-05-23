@@ -12,6 +12,11 @@ on:
       - dev
 jobs:
   coverage:
+    permissions: 
+      write: write
+      issues: write
+      pull-requests: write
+      statuses: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
