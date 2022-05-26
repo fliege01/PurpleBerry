@@ -36,6 +36,31 @@ describe('PermissionManager implementation', () => {
 			// @ts-ignore
 			expect(() => new RoleContext()).toThrow(CriticalPermissionManagerError);
 		});
+
+		test('Should throw an error for invalid RoleSchema syntax', () => {
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
+			expect(()=> permissionManager.addRoleSchema('invalidRoleSchema', {
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				// @ts-ignore
+				statements: {
+					action: 'someAction'
+				}
+			})).toThrow(GenericPermissionManagerError);
+		});
+		test('Should throw an error for invalid PermissionSchema syntax', () => {
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
+			expect(()=> permissionManager.addPermissionSchema('invalidPermissionSchema', {
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				// @ts-ignore
+				$version:0,
+				statements: {
+					action: 'someAction',
+					resource: 'someResource'
+				}
+			})).toThrow(GenericPermissionManagerError);
+		});
 	});
 });
 
